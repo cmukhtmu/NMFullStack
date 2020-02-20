@@ -11,8 +11,12 @@ import java.time.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 import org.json.simple.*;
 import com.google.gson.*;
@@ -22,30 +26,83 @@ import com.northwesternmutual.fullstack.model.Entries;
 @Repository
 public class EntriesDAO {
 	
+	@Autowired
+	private Environment env;
+	
 	public List<Entries> getAllEntries() 
 	{	
+		
 		List<Entries> result = new ArrayList<Entries>();
-		result = getMockData("AllEntries.json");
+		
+		try 
+		{
+			//result = getMockData("AllEntries.json");	
+			String baseUrl = env.getProperty("baseUrl");
+            URL url = new URL(baseUrl + "entries");//your url i.e fetch data from .
+            result = this.callAPI(url);
+            
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e);
+        }
+        finally {
+        	
+        }
+		
 		return result;
 	}	
 	
 	public List<Entries> getEntriesByCategory(String category) {
-
-		
 		List<Entries> result = new ArrayList<Entries>();
-		result = getMockData("BookEntries.json");
+        try {
+        	String baseUrl = env.getProperty("baseUrl");
+            URL url = new URL(baseUrl + "entries?category=" + category);//your url i.e fetch data from .
+            result = this.callAPI(url);
+            
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e);
+        }
+        finally {
+        	
+        }
 		
 		return result;
 	}
 	
-	private List<Entries> getMockData(String fileName)
+	private List<Entries> callAPI(URL url)
+	{
+		List<Entries> result = new ArrayList<Entries>();
+		try 
+		{
+			//result = getMockData("AllEntries.json");            
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
+            }
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            result = this.parseRawJSON(br);
+            conn.disconnect();
+
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e);
+        }
+        finally {
+        	
+        }
+		
+		return result;
+	}
+	
+	private List<Entries> parseRawJSON(Reader reader)
 	{
 		List<Entries> result = new ArrayList<Entries>();
 		try
-		{
-		
+		{		
 			JSONParser parser = new JSONParser();			
-			Object obj = parser.parse(new FileReader(getClass().getClassLoader().getResource(fileName).getFile())); 
+			Object obj = parser.parse(reader); 
 			JSONObject jsonObject = (JSONObject) obj;
 			
 			Object[] data = ((JSONArray)jsonObject.get("entries")).toArray();
@@ -76,6 +133,11 @@ public class EntriesDAO {
 			exc.printStackTrace();
 		}
 		return result;
+	}
+	
+	private List<Entries> getMockData(String fileName) throws Exception
+	{
+		return this.parseRawJSON(new FileReader(getClass().getClassLoader().getResource(fileName).getFile()));		
 	}
 
 }

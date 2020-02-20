@@ -2,6 +2,15 @@
     "count": 681,
     "entries": [
         {
+            "API": "Mock Animal",
+            "Description": "Mock Description",
+            "Auth": "MockKey",
+            "HTTPS": true,
+            "Cors": "no",
+            "Link": "https://mock.com/",
+            "Category": "Animals"
+        },        
+        {
             "API": "Cat Facts",
             "Description": "Daily cat facts",
             "Auth": "",

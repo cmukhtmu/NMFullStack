@@ -2,6 +2,15 @@
     "count": 8,
     "entries": [
         {
+            "API": "Mock Book",
+            "Description": "Mock Description",
+            "Auth": "MockKey",
+            "HTTPS": true,
+            "Cors": "no",
+            "Link": "https://mock.com/",
+            "Category": "Animals"
+        },        
+        {
             "API": "Bhagavad Gita",
             "Description": "Bhagavad Gita text",
             "Auth": "OAuth",
