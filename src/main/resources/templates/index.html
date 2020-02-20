@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>NM Full Stack Engineer Evaluation</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
+       
+      <script th:src="@{/EntriesController.js}"></script>
+      <link th:href="@{/main.css}" rel="stylesheet" />
+       
+      <head>
+   <body ng-app="EntriesManagement" ng-controller="EntriesController">
+      <h3>
+         North Western Mutual Full Stack Engineer Evaluation
+      </h3>
+	   <p>
+		<div>Search by Category:&nbsp;<select ng-options="category for category in categories" ng-model="category"></select></div>
+	    <div>
+	    	<input type="button" value="Search" ng-click="findEntries()" class="blue-button" />&nbsp;
+	    	<input type="button" value="Reset Search" ng-click="resetSearch()" class="blue-button" /> 	    
+	    </div>
+	   </p>   
+      <table border="1">
+         <tr>           
+            <th>API</th>
+            <th>Description</th>
+            <th>Auth</th>
+            <th>HTTPS</th>
+            <th>Cors</th>
+            <th>Link</th>
+            <th>Category</th>
+         </tr>
+         <!-- $scope.entries -->
+         <tr ng-repeat="entry in entries | orderBy:'api'">
+            <td> {{ entry.api }}</td>
+            <td> {{ entry.description }}</td>
+            <td >{{ entry.auth }}</td>
+            <td> {{ entry.https }}</td>
+            <td >{{ entry.cors }}</td>            
+            <td> {{ entry.link }}</td>
+            <td >{{ entry.category }}</td>            
+         </tr>
+      </table>
+   </body>
+</html>
