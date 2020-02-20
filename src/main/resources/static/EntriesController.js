@@ -13,7 +13,13 @@ app.controller("EntriesController", function($scope, $http) {
     		Link: "",
     		Category: "",
     };
-    $scope.categories = ['Books', 'Animals'];
+    $scope.categories = ["Animals",
+        "Anime",
+        "Anti-Malware",
+        "Art & Design",
+        "Books",
+        "Business",
+        "Calendar"];
     $scope.category = "";
     // Now load the data from server
     _refreshEntriesData();
