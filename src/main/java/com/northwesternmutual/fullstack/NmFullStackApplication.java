@@ -11,5 +11,4 @@ public class NmFullStackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NmFullStackApplication.class, args);
 	}
-
 }
