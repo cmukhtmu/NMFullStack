@@ -99,7 +99,7 @@ public class EntriesDAOImpl implements EntriesDAO
 			Object obj = parser.parse(reader); 
 			JSONObject jsonObject = (JSONObject) obj;
 			
-			Object[] data = ((JSONArray)jsonObject.get("entries")).toArray();
+			Object[] data = ((JSONArray)jsonObject.get("entries")) != null ? ((JSONArray)jsonObject.get("entries")).toArray() : new Object[0];
 			
         	for (int i = 0; i < data.length; i++) 
         	{

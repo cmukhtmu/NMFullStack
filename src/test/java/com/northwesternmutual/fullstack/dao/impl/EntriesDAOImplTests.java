@@ -12,7 +12,6 @@ import com.northwesternmutual.fullstack.dao.EntriesDAO;
 import com.northwesternmutual.fullstack.model.Entries;
 
 @SpringBootTest
-@ComponentScan ({"com.northwesternmutual.fullstack"})
 public class EntriesDAOImplTests {
 	
 	@Autowired
@@ -21,8 +20,8 @@ public class EntriesDAOImplTests {
 	@Test
 	public void getAllEntriesTest() {
 		
-		List<Entries> result = entriesDAO.getAllEntries();
-		Assert.notEmpty(result, "All entries should never be empty");
+		List<Entries> result = entriesDAO.getAllEntries();		
+		Assert.notEmpty(result, "All entries should never be empty");		
 	}
 	
 	@Test

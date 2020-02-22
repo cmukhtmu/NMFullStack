@@ -30,7 +30,7 @@
             <th>Category</th>
          </tr>
          <!-- $scope.entries -->
-         <tr ng-repeat="entry in entries | orderBy:'api'">
+         <tr ng-repeat="entry in entries | orderBy:['api']">
             <td> {{ entry.api }}</td>
             <td> {{ entry.description }}</td>
             <td >{{ entry.auth }}</td>
